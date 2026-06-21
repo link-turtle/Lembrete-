@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação de Presença - O Pequeno Príncipe</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght=400;600;700&display=swap');
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #0b1d3a;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+            color: #334e68;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            max-width: 500px;
+            width: 100%;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            box-sizing: border-box;
+            text-align: center;
+            border: 4px solid #f9c74f;
+            position: relative;
+        }
+
+        .header-img {
+            font-size: 55px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.1));
+        }
+
+        h1 {
+            color: #0b1d3a;
+            font-size: 26px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        h2 {
+            color: #f9c74f;
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .invite-text {
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: justify;
+            background-color: #f0f7fc;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            border-left: 5px solid #4a90e2;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #0b1d3a;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            box-sizing: border-box;
+            font-size: 16px;
+            font-family: 'Quicksand', sans-serif;
+            transition: all 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #4a90e2;
+            box-shadow: 0 0 8px rgba(74, 144, 226, 0.4);
+            outline: none;
+        }
+
+        button {
+            background-color: #1d3557;
+            color: #f9c74f;
+            border: 2px solid #f9c74f;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-family: 'Quicksand', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background-color: #f9c74f;
+            color: #1d3557;
+            box-shadow: 0 5px 15px rgba(249, 199, 79, 0.4);
+        }
+
+        .signature {
+            margin-top: 25px;
+            font-weight: 600;
+            color: #627d98;
+            font-style: italic;
+        }
+
+        .admin-section {
+            margin-top: 30px;
+            max-width: 500px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 24px;
+            box-sizing: border-box;
+            border: 2px dashed #f9c74f;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .admin-section h3 {
+            color: #0b1d3a;
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .guest-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .guest-list li {
+            padding: 10px 14px;
+            background: #f8fafc;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            width: auto;
+            font-weight: bold;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        .delete-btn:hover {
+            background: #dc2626;
+            color: white;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header-img">🪐✨🌹🦊</div>
+        <h1>Lembrete Especial</h1>
+        <h2>Tema: O Pequeno Príncipe</h2>
+
+        <div class="invite-text">
+            Oi pessoal! Passando pra avisar, que o nosso encontro é sábado dia 27 às 18h, em Rita Festas no bairro projetada. Coloque esse grande dia na sua agenda!!🥳 (27/06/2026)<br><br>
+            Peço a confirmação para podermos nos programar na questão do buffet😊.<br><br>
+            <i>"O essencial é invisível aos olhos"</i>, mas a sua presença é essencial para nós! Por favor, não se esqueça de responder, pois a lista é fundamental para organização desse dia tão especial. Contamos com você!
+        </div>
+
+        <form id="rsvpForm">
+            <div class="form-group">
+                <label for="guestName">Seu Nome Completo:</label>
+                <input type="text" id="guestName" placeholder="Digite seu nome aqui..." required>
+            </div>
+            <button type="submit">Confirmar Presença ✨</button>
+        </form>
+
+        <div class="signature">
+            Assinado: Francisca Keilha da Silva.
+        </div>
+    </div>
+
+    <div class="admin-section">
+        <h3>Lista de Presença Confirmada</h3>
+        <ul id="guestList" class="guest-list"></ul>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
+    <script>
+        // Suas credenciais oficiais do Firebase:
+        const firebaseConfig = {
+            apiKey: "AIzaSyAxX817DZJUJzUUg4H5azdKi8vkipyaBus",
+            authDomain: "lembrete-f4666.firebaseapp.com",
+            databaseURL: "https://lembrete-f4666-default-rtdb.firebaseio.com",
+            projectId: "lembrete-f4666",
+            storageBucket: "lembrete-f4666.firebasestorage.app",
+            messagingSenderId: "879688473621",
+            appId: "1:879688473621:web:4b5f48696f94d35844421c",
+            measurementId: "G-3CRBEQCG18"
+        };
+
+        // Inicializando as ferramentas
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const guestsRef = database.ref('confirmedGuests');
+
+        const rsvpForm = document.getElementById('rsvpForm');
+        const guestNameInput = document.getElementById('guestName');
+        const guestListElement = document.getElementById('guestList');
+
+        // Monitora as alterações do banco de dados ao vivo
+        guestsRef.on('value', (snapshot) => {
+            const data = snapshot.val();
+            displayGuests(data);
+        });
+
+        // Envio do formulário
+        rsvpForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = guestNameInput.value.trim();
+            if (name === '') return;
+
+            // Bloqueia nomes repetidos
+            guestsRef.once('value').then((snapshot) => {
+                const data = snapshot.val() || {};
+                const guestsArray = Object.values(data);
+
+                const nameExists = guestsArray.some(guest => guest.toLowerCase() === name.toLowerCase());
+
+                if (nameExists) {
+                    alert('Este nome já confirmou presença!');
+                    return;
+                }
+
+                // Salva o nome na nuvem do Firebase
+                guestsRef.push(name)
+                    .then(() => {
+                        alert('Presença confirmada com sucesso! Obrigado(a).🌟');
+                        guestNameInput.value = '';
+                    })
+                    .catch((error) => {
+                        alert('Erro ao salvar sua confirmação. Tente novamente.');
+                        console.error(error);
+                    });
+            });
+        });
+
+        // Exibe os nomes na lista de forma dinâmica
+        function displayGuests(data) {
+            guestListElement.innerHTML = '';
+
+            if (!data) {
+                guestListElement.innerHTML = '<li style="justify-content: center; color: #627d98;">Nenhuma presença confirmada ainda.✨</li>';
+                return;
+            }
+
+            Object.keys(data).forEach((key) => {
+                const guest = data[key];
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>👑 <b>${guest}</b></span>
+                    <button class="delete-btn" onclick="deleteGuest('${key}')">Remover</button>
+                `;
+                guestListElement.appendChild(li);
+            });
+        }
+
+        // Deleta um convidado específico por id
+        window.deleteGuest = function(key) {
+            if (confirm("Tem certeza que deseja remover este nome da lista oficial?")) {
+                database.ref('confirmedGuests/' + key).remove();
+            }
+        }
+    </script>
+
+</body>
+</html>
