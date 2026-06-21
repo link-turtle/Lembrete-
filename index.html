@@ -145,6 +145,15 @@
             color: #0b1d3a;
             margin-top: 0;
             text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .counter {
+            font-size: 14px;
+            color: #4a90e2;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
         .guest-list {
@@ -180,7 +189,7 @@
 
         <form id="rsvpForm">
             <div class="form-group">
-                <label for="guestName">Coloque seu Nome:</label>
+                <label for="guestName">Seu Nome Completo:</label>
                 <input type="text" id="guestName" placeholder="Digite seu nome aqui..." required>
             </div>
             <button type="submit">Confirmar Presença ✨</button>
@@ -193,6 +202,7 @@
 
     <div class="admin-section">
         <h3>Lista de Presença Confirmada</h3>
+        <div class="counter" id="guestCounter">Total: 0 pessoas confirmadas</div>
         <ul id="guestList" class="guest-list"></ul>
     </div>
 
@@ -218,7 +228,9 @@
         const rsvpForm = document.getElementById('rsvpForm');
         const guestNameInput = document.getElementById('guestName');
         const guestListElement = document.getElementById('guestList');
+        const guestCounterElement = document.getElementById('guestCounter');
 
+        // Escuta o banco de dados e atualiza a lista e o contador
         guestsRef.on('value', (snapshot) => {
             const data = snapshot.val();
             displayGuests(data);
@@ -226,6 +238,14 @@
 
         rsvpForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            
+            // Verifica quantas vezes este celular já confirmou
+            let mobileConfirmations = parseInt(localStorage.getItem('confirmationsCount') || '0');
+            
+            if (mobileConfirmations >= 2) {
+                alert('Limite atingido! Cada celular só pode confirmar até 2 nomes.');
+                return;
+            }
             
             const name = guestNameInput.value.trim();
             if (name === '') return;
@@ -241,9 +261,14 @@
                     return;
                 }
 
+                // Salva no Firebase
                 guestsRef.push(name)
                     .then(() => {
                         alert('Presença confirmada com sucesso! Obrigado(a).🌟');
+                        
+                        // Aumenta o contador do celular atual
+                        localStorage.setItem('confirmationsCount', mobileConfirmations + 1);
+                        
                         guestNameInput.value = '';
                     })
                     .catch((error) => {
@@ -253,16 +278,20 @@
             });
         });
 
-        // Exibe apenas os nomes confirmados na lista, sem o botão de apagar
         function displayGuests(data) {
             guestListElement.innerHTML = '';
 
             if (!data) {
+                guestCounterElement.innerText = 'Total: 0 pessoas confirmadas';
                 guestListElement.innerHTML = '<li style="justify-content: center; color: #627d98;">Nenhuma presença confirmada ainda.✨</li>';
                 return;
             }
 
-            Object.keys(data).forEach((key) => {
+            const keys = Object.keys(data);
+            // Atualiza o contador de pessoas baseado no tamanho dos dados do banco
+            guestCounterElement.innerText = `Total: ${keys.length} ${keys.length === 1 ? 'pessoa confirmada' : 'pessoas confirmadas'} 🌟`;
+
+            keys.forEach((key) => {
                 const guest = data[key];
                 const li = document.createElement('li');
                 li.innerHTML = `<span>👑 <b>${guest}</b></span>`;
