@@ -128,50 +128,6 @@
             color: #627d98;
             font-style: italic;
         }
-
-        .admin-section {
-            margin-top: 30px;
-            max-width: 500px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            border-radius: 24px;
-            box-sizing: border-box;
-            border: 2px dashed #f9c74f;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
-
-        .admin-section h3 {
-            color: #0b1d3a;
-            margin-top: 0;
-            text-align: center;
-            margin-bottom: 5px;
-        }
-
-        .counter {
-            font-size: 14px;
-            color: #4a90e2;
-            font-weight: 700;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .guest-list {
-            list-style: none;
-            padding: 0;
-            text-align: left;
-        }
-
-        .guest-list li {
-            padding: 12px 14px;
-            background: #f8fafc;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            border: 1px solid #e2e8f0;
-        }
     </style>
 </head>
 <body>
@@ -189,7 +145,7 @@
 
         <form id="rsvpForm">
             <div class="form-group">
-                <label for="guestName">Coloque seu Nome(1° e 2°):</label>
+                <label for="guestName">Coloque seu nome(1° e 2°):</label>
                 <input type="text" id="guestName" placeholder="Digite seu nome aqui..." required>
             </div>
             <button type="submit">Confirmar Presença ✨</button>
@@ -198,12 +154,6 @@
         <div class="signature">
             Assinado: Francisca Keilha da Silva.
         </div>
-    </div>
-
-    <div class="admin-section">
-        <h3>Lista de Presença Confirmada</h3>
-        <div class="counter" id="guestCounter">Total: 0 pessoas confirmadas</div>
-        <ul id="guestList" class="guest-list"></ul>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -227,19 +177,10 @@
 
         const rsvpForm = document.getElementById('rsvpForm');
         const guestNameInput = document.getElementById('guestName');
-        const guestListElement = document.getElementById('guestList');
-        const guestCounterElement = document.getElementById('guestCounter');
-
-        // Escuta o banco de dados e atualiza a lista e o contador
-        guestsRef.on('value', (snapshot) => {
-            const data = snapshot.val();
-            displayGuests(data);
-        });
 
         rsvpForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Verifica quantas vezes este celular já confirmou
             let mobileConfirmations = parseInt(localStorage.getItem('confirmationsCount') || '0');
             
             if (mobileConfirmations >= 5) {
@@ -250,6 +191,7 @@
             const name = guestNameInput.value.trim();
             if (name === '') return;
 
+            // Verifica duplicados em background na nuvem antes de autorizar o envio
             guestsRef.once('value').then((snapshot) => {
                 const data = snapshot.val() || {};
                 const guestsArray = Object.values(data);
@@ -261,14 +203,10 @@
                     return;
                 }
 
-                // Salva no Firebase
                 guestsRef.push(name)
                     .then(() => {
                         alert('Presença confirmada com sucesso! Obrigado(a).🌟');
-                        
-                        // Aumenta o contador do celular atual
                         localStorage.setItem('confirmationsCount', mobileConfirmations + 1);
-                        
                         guestNameInput.value = '';
                     })
                     .catch((error) => {
@@ -277,27 +215,6 @@
                     });
             });
         });
-
-        function displayGuests(data) {
-            guestListElement.innerHTML = '';
-
-            if (!data) {
-                guestCounterElement.innerText = 'Total: 0 pessoas confirmadas';
-                guestListElement.innerHTML = '<li style="justify-content: center; color: #627d98;">Nenhuma presença confirmada ainda.✨</li>';
-                return;
-            }
-
-            const keys = Object.keys(data);
-            // Atualiza o contador de pessoas baseado no tamanho dos dados do banco
-            guestCounterElement.innerText = `Total: ${keys.length} ${keys.length === 1 ? 'pessoa confirmada' : 'pessoas confirmadas'} 🌟`;
-
-            keys.forEach((key) => {
-                const guest = data[key];
-                const li = document.createElement('li');
-                li.innerHTML = `<span>👑 <b>${guest}</b></span>`;
-                guestListElement.appendChild(li);
-            });
-        }
     </script>
 
 </body>
