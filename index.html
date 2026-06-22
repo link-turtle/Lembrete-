@@ -189,7 +189,7 @@
 
         <form id="rsvpForm">
             <div class="form-group">
-                <label for="guestName">Seu Nome Completo:</label>
+                <label for="guestName">Coloque seu Nome(1° e 2°):</label>
                 <input type="text" id="guestName" placeholder="Digite seu nome aqui..." required>
             </div>
             <button type="submit">Confirmar Presença ✨</button>
@@ -242,7 +242,7 @@
             // Verifica quantas vezes este celular já confirmou
             let mobileConfirmations = parseInt(localStorage.getItem('confirmationsCount') || '0');
             
-            if (mobileConfirmations >= 2) {
+            if (mobileConfirmations >= 5) {
                 alert('Limite atingido! Cada celular só pode confirmar até 2 nomes.');
                 return;
             }
